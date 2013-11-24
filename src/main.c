@@ -58,6 +58,7 @@ char buffer[100];
 int counter;
 int result;
 
+int event_count;
 //volatile bool flag_ADCDMA_TransferComplete;
 //volatile bool flag_UserButton;
 
@@ -277,6 +278,8 @@ int main(void)
   flag_UART = 0;
   counter = 0;
    result = 1;
+   
+   event_count = 0;
    //GPIO_WriteBit(GPIOB, GPIO_Pin_14, Bit_SET);
   
   uint16_t x,y,z;
@@ -330,10 +333,15 @@ int main(void)
       }
       break;
     case POLL:
-       x = getRawAccelX() & 0xFF;
-       printf("%x\n", x);
-       USART_SendData(USART2, x);
+       x = getRawAccelX();
+       if(x >= 0x0FFF) {
+         USART_TX("Event");
+         USART_TX((char*)(event_count+48));
+         USART_TX("\n");
+         event_count++;
+       }
        delay(500);
+
       break;
     default:
       state = INITIALIZE;
