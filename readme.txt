@@ -1,5 +1,7 @@
 Welcome to Leaf! This is a up and coming wearable device that will revolutionize the way we connect and network! 
 
+*Super early stage prototype just to test features out
+
 -> Software
    - This folder contains the source code for what will be the firmware of our bracelet
    - Used IAR Workbench
